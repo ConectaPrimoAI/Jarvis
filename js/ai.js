@@ -1,0 +1,1 @@
+export async function askJarvis(message){const r=await fetch('/api/chat',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({message})});return await r.json()}
