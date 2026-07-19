@@ -1,0 +1,1 @@
+export function setupControls(robot){const keys={};addEventListener('keydown',e=>keys[e.key.toLowerCase()]=true);addEventListener('keyup',e=>keys[e.key.toLowerCase()]=false);return function(){if(keys.w)robot.position.z-=.05;if(keys.s)robot.position.z+=.05;if(keys.a)robot.rotation.y+=.04;if(keys.d)robot.rotation.y-=.04}}
