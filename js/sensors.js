@@ -1,0 +1,1 @@
+export function sensors(){return {distance:Math.floor(Math.random()*100),camera:'virtual-camera',battery:Math.floor(80+Math.random()*20)}}
