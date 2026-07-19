@@ -1,1 +1,14 @@
-<!DOCTYPE html><html><head><title>Jarvis MVP</title></head><body><h1>Jarvis MVP</h1><canvas id='app'></canvas><script type='module'>import * as THREE from 'https://unpkg.com/three@0.179.1/build/three.module.js';const scene=new THREE.Scene();const camera=new THREE.PerspectiveCamera(75,innerWidth/innerHeight,0.1,1000);const renderer=new THREE.WebGLRenderer({canvas:document.getElementById('app')});renderer.setSize(innerWidth,innerHeight);const cube=new THREE.Mesh(new THREE.BoxGeometry(),new THREE.MeshNormalMaterial());scene.add(cube);camera.position.z=3;function a(){requestAnimationFrame(a);cube.rotation.y+=0.01;renderer.render(scene,camera)}a();</script></body></html>
+<!DOCTYPE html>
+<html><head><title>Jarvis PrimoBot MVP</title><link rel="stylesheet" href="css/style.css"></head><body><div id="hud"><h2>🤖 Jarvis</h2><p>Modo: Render / Play</p><button onclick="chat()">Testar IA</button></div><canvas id="app"></canvas><script type="module">
+import * as THREE from 'https://unpkg.com/three@0.179.1/build/three.module.js';
+import {createRobot} from './js/robot.js';
+import {setupControls} from './js/controls.js';
+const scene=new THREE.Scene();scene.background=new THREE.Color(0x050505);
+const camera=new THREE.PerspectiveCamera(60,innerWidth/innerHeight,.1,100);
+const renderer=new THREE.WebGLRenderer({canvas:document.querySelector('#app'),antialias:true});renderer.setSize(innerWidth,innerHeight);
+const light=new THREE.DirectionalLight(0xffffff,2);light.position.set(3,5,3);scene.add(light);scene.add(new THREE.AmbientLight(0xffffff,.4));
+const robot=createRobot(THREE);scene.add(robot);camera.position.set(0,1,4);
+const move=setupControls(robot);
+function loop(){requestAnimationFrame(loop);move();renderer.render(scene,camera)}loop();
+window.chat=async()=>{let r=await fetch('/api/chat',{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify({message:'Olá Jarvis'})});alert(await r.text())}
+</script></body></html>
